@@ -7,35 +7,42 @@ const getStudents=require('../services/getStudent.js');
 const insertStudent=require('../services/insertstudent.js');
 const updateStudent=require('../services/updateStudent.js');
 const deleteStudent=require('../services/deleteStudent.js');
-const test = (req, res, next) => {
-    if (req.params.id === 'err') {
-        next(err);
+
+
+path.get('/api/student/:id',async(req,res)=>{
+    try{
+    const result = await getStudentById();
+    res.send(resullt);
     }
-    next();
-}
-path.get('/:id',test,async(req,res)=>{
+    catch{
+        res.send("unable to get students");
+    }
+
+});
+
+path.get('/api/student',async(req,res)=>{
     try{
     const result = await getStudents();
     res.send(resullt);
     }
     catch{
-        res.send("student with given id is not found");
+        res.send("unable to get students");
     }
 
 });
 
-path.post('/insert/:id',test,async(req,res)=>{
+path.post('/insert/:id',async(req,res)=>{
     try{
     const result = await insertStudent();
     res.send(result);
     }
     catch{
-        res.send("user with given id exists");
+        res.send("student with given id cannot be added");
     }
 
 });
 
-path.post('/delete/:id',test,(req,res)=>{
+path.post('/delete/:id',(req,res)=>{
     try{
     const result = await deleteStudent();
     res.send(result);
@@ -46,7 +53,7 @@ path.post('/delete/:id',test,(req,res)=>{
 
 });
 
-path.post('/update/:id',test,async(req,res)=>{
+path.post('/update/:id',async(req,res)=>{
     try{
     const result = await updateStudent();
     res.send(result);

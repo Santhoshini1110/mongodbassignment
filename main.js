@@ -1,6 +1,8 @@
 var express=require('express');
 var app=express();
 app.use(express.json);
+app.use(bodyparser.json());
+app.use(cors());
 var conn=require('./database/db.js');
 var routes=require('./routes/route.js');
 require(dotenv).config();
