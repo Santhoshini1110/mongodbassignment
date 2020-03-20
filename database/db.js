@@ -12,8 +12,8 @@ MongoClient.connect(url, function(err, client) {
 });
  module.exports=db;   */
  const mongoose=require('mongoose');
- const url = process.env.MONGO_URL;
-const dbName = process.env.MONGO_DBNAME;
+ const url = 'mongodb://localhost:27017';
+const dbName = 'student';
  mongoose.connect(url);
  mongoose.connection.on('error',err=>{
    if(err)

@@ -1,8 +1,9 @@
 var express=require('express');
-var path=express.Router;
+var path=express.Router();
 //var conn=require('../main.js');
 //var MongoClient=require('mongodb').MongoClient;
 //var assert=require('assert');
+const getStudentById=require('../services/getStudentById');
 const getStudents=require('../services/getStudent.js');
 const insertStudent=require('../services/insertstudent.js');
 const updateStudent=require('../services/updateStudent.js');
@@ -11,7 +12,7 @@ const deleteStudent=require('../services/deleteStudent.js');
 
 path.get('/api/student/:id',async(req,res)=>{
     try{
-    const result = await getStudentById();
+    const result=await getStudentById();
     res.send(resullt);
     }
     catch{
@@ -31,7 +32,7 @@ path.get('/api/student',async(req,res)=>{
 
 });
 
-path.post('/insert/:id',async(req,res)=>{
+path.post('/api/insert/',async(req,res)=>{
     try{
     const result = await insertStudent();
     res.send(result);
@@ -42,7 +43,7 @@ path.post('/insert/:id',async(req,res)=>{
 
 });
 
-path.post('/delete/:id',(req,res)=>{
+path.post('/api/delete/:id',async(req,res)=>{
     try{
     const result = await deleteStudent();
     res.send(result);
@@ -53,7 +54,7 @@ path.post('/delete/:id',(req,res)=>{
 
 });
 
-path.post('/update/:id',async(req,res)=>{
+path.post('/api/update',async(req,res)=>{
     try{
     const result = await updateStudent();
     res.send(result);

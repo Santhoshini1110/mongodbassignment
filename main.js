@@ -1,11 +1,13 @@
 var express=require('express');
 var app=express();
-app.use(express.json);
-app.use(bodyparser.json());
-app.use(cors());
+
+app.use(express.json());
+//const bodyparser=require('body-parser');
+//app.use(bodyparser);
+
 var conn=require('./database/db.js');
 var routes=require('./routes/route.js');
-require(dotenv).config();
+//require(dotenv).config();
 app.use(routes);
 //conn.connect(function(){
   //  console.log("connection established")
