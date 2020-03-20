@@ -1,18 +1,10 @@
 var express=require('express');
 var path=express.Router();
-//var conn=require('../main.js');
-//var MongoClient=require('mongodb').MongoClient;
-//var assert=require('assert');
-const getStudentById=require('../services/getStudentById');
-const getStudents=require('../services/getStudent.js');
-const insertStudent=require('../services/insertstudent.js');
-const updateStudent=require('../services/updateStudent.js');
-const deleteStudent=require('../services/deleteStudent.js');
-
+const connection=require('../database/db.js');
 
 path.get('/api/student/:id',async(req,res)=>{
     try{
-    const result=await getStudentById();
+    const result=await connection.find({"id":req.body.id});
     res.send(resullt);
     }
     catch{
@@ -21,9 +13,9 @@ path.get('/api/student/:id',async(req,res)=>{
 
 });
 
-path.get('/api/student',async(req,res)=>{
+path.get('/api/students',async(req,res)=>{
     try{
-    const result = await getStudents();
+    const result = connection.find();
     res.send(resullt);
     }
     catch{
@@ -34,7 +26,11 @@ path.get('/api/student',async(req,res)=>{
 
 path.post('/api/insert/',async(req,res)=>{
     try{
-    const result = await insertStudent();
+        var student={
+            id:req.body.id,
+            name:req.body.name,
+            department:req.body.department}
+    const result = await connection.insertOne(student);
     res.send(result);
     }
     catch{
@@ -45,7 +41,7 @@ path.post('/api/insert/',async(req,res)=>{
 
 path.post('/api/delete/:id',async(req,res)=>{
     try{
-    const result = await deleteStudent();
+    const result = await connection.deleteOne({"id":req.body.id});
     res.send(result);
     }
     catch{
@@ -56,7 +52,13 @@ path.post('/api/delete/:id',async(req,res)=>{
 
 path.post('/api/update',async(req,res)=>{
     try{
-    const result = await updateStudent();
+    var student={
+        id:req.body.id,
+        name:req.body.name,
+   
+        department:req.body.department}
+
+const result= await connection.updateOne({"id":req.params.id},{$set:student});
     res.send(result);
     }
     catch{
@@ -64,11 +66,3 @@ path.post('/api/update',async(req,res)=>{
     }
 
 });
-
-path.use((err, req, res, next) => {
-    if (err) {
-        res.send('error occoured')
-    }
-});
-
-modules.export=path;
